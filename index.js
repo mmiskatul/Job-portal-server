@@ -38,7 +38,20 @@ async function run() {
         const result= await JobCollection.findOne(quary);
         res.send(result);
     })
-
+    app.get('/applications',async(req,res)=>{
+        const email =req.query.email;
+        const quary ={
+            applicant: email
+        }
+        const result =await applicationCollection.find(quary).toArray();
+        res.send(result);      
+    })
+    app.post('/applications',async(req,res)=>{
+        const appication=req.body;
+        console.log(appication); 
+        const result =await applicationCollection.insertOne(appication);
+        res.send(result);
+    })
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
     // Ensures that the client will close when you finish/error
